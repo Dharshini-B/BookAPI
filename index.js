@@ -1,9 +1,24 @@
+require("dotenv").config();
 //Import Express
 const express = require("express");
+
+const mongoose = require("mongoose");
 
 //Import Database
 const Database = require("./database");
 
+
+mongoose
+  .connect(
+    process.env.MONGO_URI,{
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+  }
+  )
+  .then(() => console.log("Connection established! "))
+  .catch((err) => {
+    console.log(err);
+  });
 //Initialisation of the express application
 const OurAPP = express();
 
@@ -354,7 +369,7 @@ OurAPP.delete("/author/delete/:id", (req, res) => {
 
 OurAPP.delete("/author/delete/:id", (req, res) => {
   const { id } = req.params;
-  const filteredPub = Database.Publication.filter(    
+  const filteredPub = Database.Publication.filter(
     (publication) => publication.id !== parseInt(id)
   );
   Database.Publication = filteredPub;
@@ -369,28 +384,24 @@ OurAPP.delete("/author/delete/:id", (req, res) => {
 // Body    - none
 
 OurAPP.delete("/publication/delete/book/:isbn/:Id", (req, res) => {
-  const { isbn,Id } = req.params;
+  const { isbn, Id } = req.params;
   Database.Book.forEach((book) => {
-    if(book.ISBN === isbn) {
-      book.publication=0;
+    if (book.ISBN === isbn) {
+      book.publication = 0;
       return book;
     }
     return book;
   });
   Database.Publication.forEach((pub) => {
     if (pub.id === parseInt(Id)) {
-        const filteredBooks = pub.books.filter(
-          (book) => book !== isbn
-        );
-        pub.books = filteredBooks;
-        return pub;
-      }
+      const filteredBooks = pub.books.filter((book) => book !== isbn);
+      pub.books = filteredBooks;
       return pub;
+    }
+    return pub;
   });
 
-    
- 
-  return res.json({ book:Database.Book, pub: Database.Publication });
+  return res.json({ book: Database.Book, pub: Database.Publication });
 });
 
 OurAPP.listen(4000, () => console.log("Server is running")); // listen to port 4000
