@@ -23,10 +23,10 @@ Publications
 Book
 
     - GET
-        --to get all books
-        --to get specific books
-        --to get a list of books based on category
-        --to get a list of books based on author
+        --to get all books t
+        --to get specific books t
+        --to get a list of books based on category -t
+        --to get a list of books based on author -t
 
     - POST
         --to add more books
@@ -41,12 +41,13 @@ Book
 
 Author
     -GET
-        --to get all authors
-        --to get specific author
-        --to get list of authors based on a book
+        --to get all authors -t
+        --to get specific author -t
+        --to get list of authors based on a book 
 
     -POST
         --to add new author
+        --to update/add new book
     
     -PUT
         --to update author details
@@ -56,9 +57,9 @@ Author
 
 Publication
     -GET
-        --to get all publications
-        --to get specific publication
-        --to get list of publications based on a book
+        --to get all publications t
+        --to get specific publication t
+        --to get list of publications based on a book t
     
     -POST
         --to add new publication details
